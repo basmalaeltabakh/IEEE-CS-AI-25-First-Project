@@ -1,23 +1,26 @@
 import tkinter as tk
 from tkinter import messagebox
 
-class Book :
-    
-    def init(self , id , title , author , publicationYear):
-        self.id = id 
+class Book:
+    def __init__(self, book_id, title, author, publication_year):
+        self.id = book_id
         self.title = title
         self.author = author
-        self.publicationYear = publicationYear
-    
-    #Function To Display Book Details
-    def DisplayBookDetails(self):
-        print("\t\t Book Details ")
-        print("ID:", self.id)
-        print("Title:", self.title)
-        print("Author:", self.author)
-        print("Publication Year:", self.publicationYear)
-    
-    # Display Message box with Book Details
-    def DisplayMessageBox(self):
-         Bookdetails = f"ID: {self.id}\nTitle: {self.title}\nAuthor: {self.author}\nPublication Year: {self.publicationYear}"
-         messagebox.showinfo("Book Details", Bookdetails)
+        self.publication_year = publication_year
+
+    def display_details(self):
+        print("\nBook Details ")
+        print(f"ID: {self.id}")
+        print(f"Title: {self.title}")
+        print(f"Author: {self.author}")
+        print(f"Publication Year: {self.publication_year}")
+
+    def display_message_box(self):
+        book_details = f"ID: {self.id}\nTitle: {self.title}\nAuthor: {self.author}\nPublication Year: {self.publication_year}"
+        messagebox.showinfo("Book Details", book_details)
+
+    def __str__(self):
+        return f"ID: {self.id}, Title: {self.title}, Author: {self.author}, Year: {self.publication_year}"
+
+    def dectionarize(self):
+        return {"book_id": self.id, "title": self.title, "author": self.author, "publication_year": self.publication_year}
