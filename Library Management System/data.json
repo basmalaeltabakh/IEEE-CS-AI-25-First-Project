@@ -1,0 +1,14 @@
+[
+    {
+        "book_id": 1,
+        "title": "Clean Code",
+        "author": "Robert C. Martin",
+        "publication_year": 2008
+    },
+    {
+        "book_id": 2,
+        "title": "batata",
+        "author": "so5na",
+        "publication_year": 1969
+    }
+]
