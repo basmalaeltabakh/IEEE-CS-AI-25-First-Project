@@ -3,7 +3,8 @@ from tkinter import messagebox
 
 class Book :
     
-    def init(self , id , title , author , publicationYear):
+    def __init__(self , id , title , author , publicationYear):
+       
         self.id = id 
         self.title = title
         self.author = author
@@ -18,6 +19,6 @@ class Book :
         print("Publication Year:", self.publicationYear)
     
     # Display Message box with Book Details
-    def DisplayMessageBox(self):
-         Bookdetails = f"ID: {self.id}\nTitle: {self.title}\nAuthor: {self.author}\nPublication Year: {self.publicationYear}"
-         messagebox.showinfo("Book Details", Bookdetails)
+    #def DisplayMessageBox(self):
+         #Bookdetails = f"ID: {self.id}\nTitle: {self.title}\nAuthor: {self.author}\nPublication Year: {self.publicationYear}"
+        # messagebox.showinfo("Book Details", Bookdetails)
