@@ -1,24 +1,24 @@
-import tkinter as tk
-from tkinter import messagebox
 
-class Book :
-    
-    def __init__(self , id , title , author , publicationYear):
-       
-        self.id = id 
+class Book:
+    def __init__(self, Id, title, author, publicationYear):
+        self.Id = Id
         self.title = title
         self.author = author
         self.publicationYear = publicationYear
     
-    #Function To Display Book Details
+    # Display Book Details 
     def DisplayBookDetails(self):
         print("\t\t Book Details ")
-        print("ID:", self.id)
+        print("ID:", self.Id)
         print("Title:", self.title)
         print("Author:", self.author)
         print("Publication Year:", self.publicationYear)
-    
-    # Display Message box with Book Details
-    #def DisplayMessageBox(self):
-         #Bookdetails = f"ID: {self.id}\nTitle: {self.title}\nAuthor: {self.author}\nPublication Year: {self.publicationYear}"
-        # messagebox.showinfo("Book Details", Bookdetails)
+
+    # Function to convert book data into a dictionary (for JSON storage)
+    def dictionarize(self):
+        return {
+            "Id": self.Id,
+            "title": self.title,
+            "author": self.author,
+            "publicationYear": self.publicationYear
+        }
