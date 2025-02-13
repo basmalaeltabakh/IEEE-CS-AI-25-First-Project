@@ -1,30 +1,46 @@
-from Library import Library
+from book import Book
+from library import Library
+
+
+def showMenu():
+    print("\n" + "="*50)
+    print(" " * 10 + " Library Management System ")
+    print("="*50)
+    print(" " * 10 + " 1. Add Book")
+    print(" " * 10 + " 2. View Books")
+    print(" " * 10 + " 3. Search Book")
+    print(" " * 10 + " 4. Update Book Details")  
+    print(" " * 10 + " 5. Delete Book")  
+    print(" " * 10 + " 6. Load Book from file")
+    print(" " * 10 + " 7. Save Book to file")
+    print(" " * 10 + " 8. Exit") 
+    print("="*50)
 
 def main():
     library = Library()
-    while True:
-        print("\nLibrary Management System")
-        print("1. Add Book")
-        print("2. View Books")
-        print("3. Search Book")
-        print("4. Save to File")
-        print("5. Exit")
 
+    while True:
+        showMenu()
         choice = input("Enter your choice: ").strip()
-        match choice:
-            case "1":
-                library.add_book()
-            case "2":
-                library.view_books()
-            case "3" :
-                library.search_book()
-            case "4" :
-                library.save_to_file()
-            case "5":
-                print("Exiting the system. Goodbye!")
-                break
-            case _:
-                print("Invalid choice. Please select a valid option.")
+        if choice == "1":
+            library.addBook()
+        elif choice == "2":
+            library.viewBooks()
+        elif choice == "3":
+            library.searchBook()
+        elif choice == "4":
+            library.updateBook(input("Enter Book ID to update: "))
+        elif choice == "5":
+            library.deleteBook(input("Enter Book ID to delete: "))
+        elif choice == "6":
+            library.books = Library.loadBooks()
+        elif choice == "7":
+            library.saveToFile()
+        elif choice == "8":
+            print(" Exiting Library System.")
+            break
+        else:
+            print(" Invalid choice! Enter a number between 1-8.")
 
 
 if __name__ == "__main__":

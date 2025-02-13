@@ -1,109 +1,175 @@
+from book import Book
 import json
-from Book import Book
 
 class Library:
 
-    @classmethod
-    def load_from_file(cls):
-        try:
-            with open("data.json", "r") as file:
-                data = json.load(file)
-                return [Book(**book) for book in data]
-        except FileNotFoundError:
-            print("Can't find file")
-            return[]
-
     def __init__(self):
-        self.books = Library.load_from_file()
+        # Load books from file when the library is initialized
+        self.books = Library.loadBooks()
 
-    def add_book(self):
-        while True:
-                print("Enter 'b' to go back to menu ")
-                title = input("Enter book title  ").strip()
-                if title.lower() == "b":
-                    return
-                author = input("Enter author name: ").strip()
-                if author.lower() == "b":
-                    return
-                year = input("Enter publication year: ").strip()
-                if year.lower() == "b":
-                    return
-                try:
-                    publication_year = int(year)
-                except ValueError:
-                    print("Invalid input. Please enter a valid year.")
-                    continue
-                book_id = len(self.books) + 1
-                book = Book(book_id, title, author, publication_year)
-                self.books.append(book)
-                print("Book added successfully!")
+    # Function to add a new book
+    def addBook(self):
+        Id = input("Enter Book ID: ").strip()
+        if not Id.isdigit():
+            print(" Invalid input! Book ID should be a number.")
+            return
+
+        # Check if the book ID already exists
+        for book in self.books:
+            if str(book.Id) == Id:
+                print(" Invalid ID, Book ID already exists!")
                 return
 
-
-    def view_books(self):
+        # Get book details
         while True:
-            if not self.books:
-                print("No books available in the library.")
+            title = input("Enter Book Title: ").strip()
+            if title.lower() == "b":
                 return
+            if title.replace(" ", "").isalpha():
+                break
+            print(" Invalid input! Title should contain letters only.")
 
-            option = input(
-                "Enter 'A' to view all books ,'AU' to view books with same author ,'Y' to view books with same publish year (or type 'b' to go back to menu)").strip().upper()
+        while True:
+            author = input("Enter Author Name: ").strip()
+            if author.lower() == "b":
+                return
+            if author.replace(" ", "").isalpha():
+                break
+            print(" Invalid input! Author name should contain letters only.")
 
+        while True:
+            publicationYear = input("Enter Publication Year: ").strip()
+            if publicationYear.lower() == "b":
+                return
+            if publicationYear.isdigit():
+                break
+            print(" Invalid input! Please enter a valid year.")
+
+        # Create new book and add it to the list
+        newBook = Book(int(Id), title, author, int(publicationYear))
+        self.books.append(newBook)
+        print(" New Book Added Successfully.")
+
+    # Function to view books
+    def viewBooks(self):
+        if not self.books:
+            print(" ERROR! No books available.")
+            return
+        
+        while True:
+            print("Enter 'A' to view all books, 'AU' to filter by author, 'Y' to filter by year, or 'b' to go back")
+            option = input("Your choice: ").strip().upper()
 
             if option == "B":
                 return
+
             if option == "AU":
-                option_val = input("Enter author name: ").strip()
-                if option_val.lower() == "b":
+                optionVal = input("Enter Author Name: ").strip()
+                if optionVal.lower() == "b":
                     return
-                filtered_books = [book for book in self.books if book.author.lower() == option_val.lower()]
+                filteredBooks = [book for book in self.books if book.author.lower() == optionVal.lower()]
+            
             elif option == "Y":
                 try:
-                    option_val = input("Enter publication year: ").strip()
-                    if option_val.lower() == "b":
+                    optionVal = input("Enter Publication Year: ").strip()
+                    if optionVal.lower() == "b":
                         return
-                    option_val = int(option_val)
-                    filtered_books = [book for book in self.books if book.publication_year == option_val]
+                    optionVal = int(optionVal)
+                    filteredBooks = [book for book in self.books if book.publicationYear == optionVal]
                 except ValueError:
-                    print("Invalid input. Please enter a valid year.")
+                    print(" Invalid input. Please enter a valid year.")
                     continue
-            elif option =="A":
-                filtered_books=self.books
+            
+            elif option == "A":
+                filteredBooks = self.books
+            
             else:
-                print("Please enter a valid input ")
+                print(" Invalid input! Please enter a valid choice.")
                 continue
 
-            if not filtered_books:
-                print("No books found with the given input filter.")
+            if not filteredBooks:
+                print(" No books found with the given filter.")
                 return
 
-            print("Library Books:")
-            for book in filtered_books:
-                book.display_details()
+            print(" Library Books:")
+            for book in filteredBooks:
+                book.DisplayBookDetails()
+                print("#" * 50)
 
-    
-    
-    def search_book(self):
-        while True:
-            search = input("Enter book ID,title (or type 'b' to go back to menu): ").strip()
-            if search.lower() == "b":
+    # Function to search for a book
+    def searchBook(self):
+        searchTerm = input("Enter Book ID or Title for search (or 'b' to go back): ").strip()
+        if searchTerm.lower() == "b":
+            return
+
+        for book in self.books:
+            if str(book.Id) == searchTerm or book.title.lower() == searchTerm.lower():
+                print(" Book Found!")
+                book.DisplayBookDetails()
                 return
 
-            if not search:
-                print("Please enter a valid input ")
-                continue
+        print(" Book Not Found!")
 
-            for book in self.books:
-                if (str(book.id) == search or
-                        book.title.lower() == search.lower()):
-                    print("Book Found:")
-                    book.display_message_box()
-                    return
-            print("Book not found.")
+    # Function to update book details
+    def updateBook(self, Id):
+        for book in self.books:
+            if str(book.Id) == str(Id):
+                print(" Book Found! Enter new details or press Enter to keep existing values.")
 
-    def save_to_file(self):
-        with open("data.json","w") as file:
-            json.dump([book.dectionarize() for book in self.books], file, indent=4)
-    
-    
-    
+                newTitle = input(f"Enter new title (current: {book.title}): ").strip()
+                if newTitle:
+                    book.title = newTitle
+
+                newAuthor = input(f"Enter new author (current: {book.author}): ").strip()
+                if newAuthor:
+                    book.author = newAuthor
+
+                newPublicationYear = input(f"Enter new year (current: {book.publicationYear}): ").strip()
+                if newPublicationYear.isdigit():
+                    book.publicationYear = int(newPublicationYear)
+
+                print(" Book details updated successfully!")
+                return
+        
+        print(" Book not found!")
+
+    # Function to delete a book
+    def deleteBook(self, Id):
+        for book in self.books:
+            if str(book.Id) == str(Id):
+                self.books.remove(book)
+                print(" Book Deleted Successfully!")
+                return
+        print(" Book not found!")
+
+    @staticmethod
+    def loadBooks():
+        try:
+            with open("data.json", "r") as file:
+                data = json.load(file)  # Load JSON data
+
+            
+            correctedData = []
+            for book in data:
+                correctedData.append({
+                    "Id": book.get("Id"), 
+                    "title": book.get("Title", book.get("title")),  
+                    "author": book.get("Author", book.get("author")), 
+                    "publicationYear": book.get("publicationYear")  
+                })
+
+            return [Book(**book) for book in correctedData]
+
+        except FileNotFoundError:
+            print(" ERROR! No saved books found.")
+            return []
+        except json.JSONDecodeError:
+            print(" ERROR! Corrupted JSON file. Resetting data.")
+            return []
+
+
+    # Function to save books to JSON file
+    def saveToFile(self):
+        with open("data.json", "w") as file:
+            json.dump([book.dictionarize() for book in self.books], file, indent=4)
+        print(" Books saved successfully!")
