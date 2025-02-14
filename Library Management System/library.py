@@ -4,37 +4,34 @@ import os
 import numpy as np
 
 class Library:
-
+    @classmethod
+    def loadBooks(cls):
+        try:
+            with open("data.json", "r") as file:
+                data = json.load(file)
+                return [Book(**book) for book in data]
+        except FileNotFoundError:
+            print("Can't find file")
+            return[]
+        
     def __init__(self):
         # Load books from file when the library is initialized
-        self.books = Library.loadBooks()
-        if not self.books:
-            self.initializeBooks()
-
-
-    def initializeBooks(self):
-        self.books = [
-            Book(1, "The Great Gatsby", "F. Scott Fitzgerald", 1925),
-            Book(2, "To Kill a Mockingbird", "Harper Lee", 1960),
-            Book(3, "1984", "George Orwell", 1949),
-            Book(4, "Pride and Prejudice", "Jane Austen", 1813),
-            Book(5, "The Catcher in the Rye", "J.D. Salinger", 1951)
-        ]
-        print("Default books have been added.")
+        self.books = Library.loadBooks()       
 
     # Function to add a new book
     def addBook(self):
         os.system("cls" if os.name == "nt" else "clear")
-        Id = input("Enter Book ID: ").strip()
-        if not Id.isdigit():
-            print(" Invalid input! Book ID should be a number.")
-            return
+        ISBN = input("Enter Book ISBN: ").strip()
+        if ISBN.lower() == "b":
+             return
+        
 
-        # Check if the book ID already exists
+        # Check if the book ISBN already exists
         for book in self.books:
-            if str(book.Id) == Id:
-                print(" Invalid ID, Book ID already exists!")
-                return
+            if str(book.ISBN) == ISBN:
+                print(" Invalid ISBN, Book ISBN already exists!")
+                ISBN = input("Enter Valid  Book ISBN: ").strip()
+               
 
         # Get book details
         while True:
@@ -62,8 +59,10 @@ class Library:
             print(" Invalid input! Please enter a valid year.")
 
         # Create new book and add it to the list
-        newBook = Book(int(Id), title, author, int(publicationYear))
+        Id = len(self.books) + 1
+        newBook = Book(Id,ISBN, title, author, int(publicationYear))
         self.books.append(newBook)
+        
         print(" New Book Added Successfully.")
 
     # Function to view books
@@ -115,12 +114,12 @@ class Library:
     # Function to search for a book
     def searchBook(self):
         os.system("cls" if os.name == "nt" else "clear")
-        searchTerm = input("Enter Book ID or Title for search (or 'b' to go back): ").strip()
+        searchTerm = input("Enter Book ISBN or Title for search (or 'b' to go back): ").strip()
         if searchTerm.lower() == "b":
             return
 
         for book in self.books:
-            if str(book.Id) == searchTerm or book.title.lower() == searchTerm.lower():
+            if str(book.ISBN) == searchTerm or book.title.lower() == searchTerm.lower():
                 print(" Book Found!")
                 book.DisplayBookDetails()
                 return
@@ -133,6 +132,10 @@ class Library:
         for book in self.books:
             if str(book.Id) == str(Id):
                 print(" Book Found! Enter new details or press Enter to keep existing values.")
+
+                newISBN = input(f"Enter new ISBN (current: {book.ISBN}): ").strip()
+                if newISBN:
+                    book.ISBN = newISBN
 
                 newTitle = input(f"Enter new title (current: {book.title}): ").strip()
                 if newTitle:
@@ -160,31 +163,15 @@ class Library:
                 print(" Book Deleted Successfully!")
                 return
         print(" Book not found!")
-
-    @staticmethod
-    def loadBooks():
-        try:
-            with open("data.json", "r") as file:
-                data = json.load(file)  # Load JSON data
-            
-            correctedData = []
-            for book in data:
-                correctedData.append({
-                    "Id": book.get("Id"), 
-                    "title": book.get("Title", book.get("title")),  
-                    "author": book.get("Author", book.get("author")), 
-                    "publicationYear": book.get("publicationYear")  
-                })
-
-            return [Book(**book) for book in correctedData]
-
-        except FileNotFoundError:
-            print(" ERROR! No saved books found.")
-            return []
-        except json.JSONDecodeError:
-            print(" ERROR! Corrupted JSON file. Resetting data.")
-            return []
-
+    
+    def deleteAllBooks(self):
+        os.system("cls" if os.name == "nt" else "clear")
+        self.books.clear()
+        print(" All Book Deleted Successfully!")
+        return
+        
+  
+    
     # Function to save books to JSON file
     def saveToFile(self):
         os.system("cls" if os.name == "nt" else "clear")
