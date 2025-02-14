@@ -1,9 +1,11 @@
-from book import Book
+from Book import Book
 import json
 import os
 import numpy as np
 
+
 class Library:
+    changes = False
     @classmethod
     def loadBooks(cls):
         try:
@@ -23,7 +25,7 @@ class Library:
         os.system("cls" if os.name == "nt" else "clear")
         ISBN = input("Enter Book ISBN: ").strip()
         if ISBN.lower() == "b":
-             return
+            return
         
 
         # Check if the book ISBN already exists
@@ -31,7 +33,7 @@ class Library:
             if str(book.ISBN) == ISBN:
                 print(" Invalid ISBN, Book ISBN already exists!")
                 ISBN = input("Enter Valid  Book ISBN: ").strip()
-               
+
 
         # Get book details
         while True:
@@ -62,7 +64,7 @@ class Library:
         Id = len(self.books) + 1
         newBook = Book(Id,ISBN, title, author, int(publicationYear))
         self.books.append(newBook)
-        
+        Library.changes = True
         print(" New Book Added Successfully.")
 
     # Function to view books
@@ -148,7 +150,7 @@ class Library:
                 newPublicationYear = input(f"Enter new year (current: {book.publicationYear}): ").strip()
                 if newPublicationYear.isdigit():
                     book.publicationYear = int(newPublicationYear)
-
+                Library.changes = True
                 print(" Book details updated successfully!")
                 return
         
@@ -161,6 +163,7 @@ class Library:
             if str(book.Id) == str(Id):
                 self.books.remove(book)
                 print(" Book Deleted Successfully!")
+                Library.changes = True
                 return
         print(" Book not found!")
     
@@ -168,9 +171,10 @@ class Library:
         os.system("cls" if os.name == "nt" else "clear")
         self.books.clear()
         print(" All Book Deleted Successfully!")
+        Library.changes = True
         return
         
-  
+
     
     # Function to save books to JSON file
     def saveToFile(self):
