@@ -1,12 +1,26 @@
 from book import Book
 import json
 import os
+import numpy as np
 
 class Library:
 
     def __init__(self):
         # Load books from file when the library is initialized
         self.books = Library.loadBooks()
+        if not self.books:
+            self.initializeBooks()
+
+
+    def initializeBooks(self):
+        self.books = [
+            Book(1, "The Great Gatsby", "F. Scott Fitzgerald", 1925),
+            Book(2, "To Kill a Mockingbird", "Harper Lee", 1960),
+            Book(3, "1984", "George Orwell", 1949),
+            Book(4, "Pride and Prejudice", "Jane Austen", 1813),
+            Book(5, "The Catcher in the Rye", "J.D. Salinger", 1951)
+        ]
+        print("Default books have been added.")
 
     # Function to add a new book
     def addBook(self):
@@ -51,7 +65,6 @@ class Library:
         newBook = Book(int(Id), title, author, int(publicationYear))
         self.books.append(newBook)
         print(" New Book Added Successfully.")
-        os.system("cls" if os.name == "nt" else "clear")
 
     # Function to view books
     def viewBooks(self):
@@ -98,7 +111,6 @@ class Library:
             for book in filteredBooks:
                 book.DisplayBookDetails()
                 print("#" * 50)
-                os.system("cls" if os.name == "nt" else "clear")
 
     # Function to search for a book
     def searchBook(self):
@@ -114,7 +126,6 @@ class Library:
                 return
 
         print(" Book Not Found!")
-        os.system("cls" if os.name == "nt" else "clear")
 
     # Function to update book details
     def updateBook(self, Id):
@@ -139,7 +150,6 @@ class Library:
                 return
         
         print(" Book not found!")
-        os.system("cls" if os.name == "nt" else "clear")
 
     # Function to delete a book
     def deleteBook(self, Id):
@@ -150,7 +160,6 @@ class Library:
                 print(" Book Deleted Successfully!")
                 return
         print(" Book not found!")
-        os.system("cls" if os.name == "nt" else "clear")
 
     @staticmethod
     def loadBooks():
@@ -182,3 +191,11 @@ class Library:
         with open("data.json", "w") as file:
             json.dump([book.dictionarize() for book in self.books], file, indent=4)
         print(" Books saved successfully!")
+
+    # Function to get Book Statistics
+    def booksStatistics(self):
+        os.system("cls" if os.name == "nt" else "clear")
+        years = np.array([book.publicationYear for book in self.books])
+        print(f"Average Publication Year: {np.mean(years)}")
+        print(f"Oldest Book: {np.min(years)}")
+        print(f"Newest Book: {np.max(years)}")

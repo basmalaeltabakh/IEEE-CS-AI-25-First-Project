@@ -1,7 +1,6 @@
 from book import Book
 from library import Library
 
-
 def showMenu():
     print("\n" + "="*50)
     print(" " * 10 + " Library Management System ")
@@ -13,7 +12,8 @@ def showMenu():
     print(" " * 10 + " 5. Delete Book")  
     print(" " * 10 + " 6. Load Book from file")
     print(" " * 10 + " 7. Save Book to file")
-    print(" " * 10 + " 8. Exit") 
+    print(" " * 10 + " 8. View Books Statistics")
+    print(" " * 10 + " 9. Exit") 
     print("="*50)
 
 def main():
@@ -37,11 +37,12 @@ def main():
         elif choice == "7":
             library.saveToFile()
         elif choice == "8":
+            library.booksStatistics()
+        elif choice == "9":
             print(" Exiting Library System.")
             break
         else:
-            print(" Invalid choice! Enter a number between 1-8.")
-
+            print(" Invalid choice! Enter a number between 1-9.")
 
 if __name__ == "__main__":
     main()
