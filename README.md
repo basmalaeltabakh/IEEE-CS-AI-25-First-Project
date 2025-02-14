@@ -75,10 +75,12 @@ Each option calls the respective function from `Library`.
 - Books are stored in a file (`data.json`) for persistence.
 - Entering 'b' in inputs allows the user to go back.
 - The program validates input to prevent incorrect data entries.
-
-## Contributors
-- **[Basmala Saeed ]**
-- **[Ayman Yasser ]**
--  **[Mohammed Adel ]** 
+---
 #### This project is a great example of **Object-Oriented Programming (OOP)** in Python, showcasing the use of classes, file handling, and user interaction through a menu-driven approach.
+---
+## Contributors
+- [Basmala Saeed](https://github.com/basmalaeltabakh)
+- [Ayman Yasser](https://github.com/ayman-yasser)
+- [Mohammed Adel](https://github.com/mohamed-295)
+
 
