@@ -8,6 +8,7 @@ This is a simple **Library Management System** written in Python that allows use
 - Update book details
 - Delete books
 - Save and load books from a JSON file
+- View Books Statistics
 
 The project is organized into three separate files:
 1. `book.py` - Defines the `Book` class.
@@ -39,6 +40,8 @@ This file defines the `Library` class, which manages a collection of books. It l
 - `deleteBook(Id)`: Deletes a book by its ID.
 - `saveToFile()`: Saves all books to a JSON file (`data.json`).
 - `loadBooks()`: Loads books from `data.json`.
+- `View Books Statistics()`: Displays statistics about the books in the library, such as the total number of books and other relevant data.
+
 
 ### 3. `main.py`
 This is the entry point of the program where the user interacts with the system.
@@ -58,15 +61,24 @@ This is the entry point of the program where the user interacts with the system.
 5. Delete Book
 6. Load Books from File
 7. Save Books to File
+8.View Books Statistics
 8. Exit
 ```
 Each option calls the respective function from `Library`.
 
 ---
+## Libraries Used
+- **numpy**: Used to calculate book statistics by publication year.
+- **os**: Used to clear the terminal screen at the beginning of each function for better user experience.
+
 ## Notes
 - Books are stored in a file (`data.json`) for persistence.
 - Entering 'b' in inputs allows the user to go back.
 - The program validates input to prevent incorrect data entries.
 
+## Contributors
+- **[Basmala Saeed ]**
+- **[Ayman Yasser ]**
+-  **[Mohammed Adel ]** 
 #### This project is a great example of **Object-Oriented Programming (OOP)** in Python, showcasing the use of classes, file handling, and user interaction through a menu-driven approach.
 
