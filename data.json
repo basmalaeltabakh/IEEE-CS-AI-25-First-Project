@@ -9,8 +9,15 @@
     {
         "Id": 2,
         "ISBN": "1",
-        "title": "Batates",
+        "title": "Potato",
         "author": "Batates Mahrosa",
-        "publicationYear": 2025
+        "publicationYear": 2004
+    },
+    {
+        "Id": 3,
+        "ISBN": "123456",
+        "title": "harry potato",
+        "author": "hany salama",
+        "publicationYear": 2020
     }
 ]

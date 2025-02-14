@@ -1,4 +1,3 @@
-from book import Book
 from library import Library
 
 def showMenu():
@@ -22,28 +21,35 @@ def main():
     while True:
         showMenu()
         choice = input("Enter your choice: ").strip()
-        if choice == "1":
-            library.addBook()
-        elif choice == "2":
-            library.viewBooks()
-        elif choice == "3":
-            library.searchBook()
-        elif choice == "4":
-            library.updateBook(input("Enter Book ID to update: "))
-        elif choice == "5":
-            library.deleteBook(input("Enter Book ID to delete: "))        
-        elif choice == "6":
-            library.saveToFile()
-        elif choice == "7":
-            library.booksStatistics()
-        elif choice == "8":           
-            library.deleteAllBooks()
-        elif choice == "9":
-            
-            print(" Exiting Library System.")
-            break
-        else:
-            print(" Invalid choice! Enter a number between 1-8.")
+        match choice:
+            case "1":
+                library.addBook()
+            case "2":
+                library.viewBooks()
+            case "3":
+                library.searchBook()
+            case "4":
+                library.updateBook(input("Enter Book ID to update: "))
+            case "5":
+                library.deleteBook(input("Enter Book ID to delete: "))        
+            case "6":
+                library.saveToFile()
+            case "7":
+                library.booksStatistics()
+            case "8":           
+                library.deleteAllBooks()
+            case "9":
+                if Library.changes:
+                    save = input("Do you want save changes[y/n]: ").lower()
+                    while save not in ["y", "n"]:
+                        save = input("Do you want save changes[y/n]: ").lower()
+                    if save == "y":
+                        library.saveToFile()
+                    
+                print(" Exiting Library System.")
+                break
+            case _:
+                print(" Invalid choice! Enter a number between 1-8.")
 
 if __name__ == "__main__":
     main()
