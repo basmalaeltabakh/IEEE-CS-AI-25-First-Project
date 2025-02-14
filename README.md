@@ -9,6 +9,7 @@ This is a simple **Library Management System** written in Python that allows use
 - Delete books
 - Save and load books from a JSON file
 - View Books Statistics
+- Delete All Books
 
 The project is organized into three separate files:
 1. `book.py` - Defines the `Book` class.
@@ -20,7 +21,7 @@ The project is organized into three separate files:
 
 ### 1. `book.py`
 This file defines the `Book` class, which represents a book in the library. Each book has:
-- `Id` (string) - Unique book identifier
+- `ISBN` (string) - Unique book identifier
 - `title` (string) - Title of the book
 - `author` (string) - Author's name
 - `publicationYear` (integer) - Year of publication
@@ -40,6 +41,7 @@ This file defines the `Library` class, which manages a collection of books. It l
 - `deleteBook(Id)`: Deletes a book by its ID.
 - `saveToFile()`: Saves all books to a JSON file (`data.json`).
 - `loadBooks()`: Loads books from `data.json`.
+- `deleteAllBooks`: Deletes all books by `clear` Function.
 - `View Books Statistics()`: Displays statistics about the books in the library, such as the total number of books and other relevant data.
 
 
@@ -59,10 +61,10 @@ This is the entry point of the program where the user interacts with the system.
 3. Search Book
 4. Update Book Details
 5. Delete Book
-6. Load Books from File
-7. Save Books to File
-8.View Books Statistics
-8. Exit
+6. Save Books to File
+7.View Books Statistics
+8. Delete all Books
+9. Exit
 ```
 Each option calls the respective function from `Library`.
 
